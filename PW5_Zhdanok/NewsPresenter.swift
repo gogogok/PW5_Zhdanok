@@ -6,8 +6,14 @@ final class NewsPresenter: NewsPresentationLogic {
     
     func presentNews(_ response: News.Load.Response) {
         let rows = response.articles.map {
-            News.Row(title: $0.title, subtitle: $0.description)
+            News.Row(
+                title: $0.title,
+                subtitle: $0.description,
+                imageUrl: $0.imageUrl,
+                articleUrl: $0.articleUrl
+            )
         }
-        viewController?.displayNews(.init(rows: rows))
+        let vm = News.Load.ViewModel(rows: rows)
+        viewController?.displayNews(vm)
     }
 }

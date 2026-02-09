@@ -16,13 +16,13 @@ final class ArticleWorker {
     
     private let decoder: JSONDecoder = JSONDecoder()
     
-    private func getURL(_ rubric: Int, _ pageIndex: Int) -> URL? {
-        URL(string: "https://news.myseldon.com/api/Section?rubricId=\(rubric)&pageSize=8&pageIndex=\(pageIndex)")
+    private func getURL(_ rubric: Int, _ pageSize: Int,_ pageIndex: Int) -> URL? {
+        URL(string: "https://news.myseldon.com/api/Section?rubricId=\(rubric)&pageSize=\(pageSize)&pageIndex=\(pageIndex)")
     }
     
     func fetchNews(page: Int, completion: @escaping (Result<[Article], Error>) -> Void) {
         
-        guard let url = getURL(Constants.rubricId, Constants.pageSize) else {
+        guard let url = getURL(Constants.rubricId, Constants.pageSize, page) else {
             completion(.failure(URLError(.badURL)))
             return
         }

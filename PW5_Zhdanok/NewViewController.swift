@@ -8,12 +8,12 @@
 import UIKit
 
 class NewViewController: UIViewController {
-
+    
     
     let interactor: NewsInteractor
     private let tableView = UITableView(frame: .zero, style: .plain)
     private var rows: [News.Row] = []
-
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -21,7 +21,7 @@ class NewViewController: UIViewController {
         setupTableView()
         interactor.loadFreshNews()
     }
-
+    
     init(interactor: NewsInteractor) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
@@ -38,37 +38,33 @@ class NewViewController: UIViewController {
         tableView.pinLeft(to: view.leadingAnchor)
         tableView.pinRight(to: view.trailingAnchor)
         tableView.pinBottom(to: view.bottomAnchor)
+        
+        tableView.register(ArticleCell.self, forCellReuseIdentifier: ArticleCell.reuseId)
 
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 80
+//        tableView.estimatedRowHeight = 80
     }
     
     func displayNews(_ viewModel: News.Load.ViewModel) {
-            rows = viewModel.rows
-            DispatchQueue.main.async { [weak self] in
-                self?.tableView.reloadData()
-            }
+        rows = viewModel.rows
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
         }
+    }
+    
 }
 
 extension NewViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         rows.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = rows[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-
-        var content = cell.defaultContentConfiguration()
-        content.text = row.title
-        content.secondaryText = row.subtitle
-        content.secondaryTextProperties.numberOfLines = 0
-        cell.contentConfiguration = content
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: ArticleCell.reuseId, for: indexPath) as! ArticleCell
+        cell.configure(title: row.title, description: row.subtitle, imageUrl: row.imageUrl)
         return cell
     }
 }
@@ -78,14 +74,14 @@ extension NewViewController: UITableViewDelegate {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         let height = scrollView.frame.size.height
-
+        
         if offsetY > contentHeight - height * 1.5 {
             interactor.loadMoreNews()
         }
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
+        
     }
 }

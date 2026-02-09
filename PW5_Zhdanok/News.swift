@@ -17,7 +17,10 @@ enum News {
     struct Row {
         let title: String
         let subtitle: String?
+        let imageUrl: URL?
+        let articleUrl: URL?
     }
+
 }
 
 
