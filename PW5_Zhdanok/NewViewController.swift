@@ -44,7 +44,6 @@ class NewViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
-//        tableView.estimatedRowHeight = 80
     }
     
     func displayNews(_ viewModel: News.Load.ViewModel) {
@@ -81,7 +80,11 @@ extension NewViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        guard indexPath.row < interactor.articles.count else { return }
+        guard let url = interactor.articles[indexPath.row].articleUrl else { return }
+        let vc = WebViewController()
+        vc.url = url
+        navigationController?.pushViewController(vc, animated: true)
         
     }
 }

@@ -1,6 +1,16 @@
 import UIKit
 
 final class ArticleCell: UITableViewCell {
+    
+    enum Constants {
+        static let articleImageViewTop: CGFloat = 20
+        static let articleImageViewLeftRight: CGFloat = 50
+        static let articleImageViewHeight: CGFloat = 100
+        
+        static let titleLabelFont: CGFloat = 18
+        static let descriptionLabelTop: CGFloat = 20
+    }
+    
     static let reuseId = "ArticleCell"
 
     private let articleImageView = UIImageView()
@@ -25,17 +35,17 @@ final class ArticleCell: UITableViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(descriptionLabel)
 
-        articleImageView.pinTop(to: contentView.topAnchor, 20)
-        articleImageView.pinHorizontal(to: contentView, 50)
+        articleImageView.pinTop(to: contentView.topAnchor, Constants.articleImageViewTop)
+        articleImageView.pinHorizontal(to: contentView, Constants.articleImageViewLeftRight)
         articleImageView.setHeight(180)
     
         titleLabel.textAlignment = .center
-        titleLabel.font = .boldSystemFont(ofSize: 18)
+        titleLabel.font = .boldSystemFont(ofSize: Constants.titleLabelFont)
         titleLabel.pinTop(to: articleImageView.bottomAnchor)
-        titleLabel.pinHorizontal(to: contentView, 50)
+        titleLabel.pinHorizontal(to: contentView, Constants.articleImageViewLeftRight)
         
-        descriptionLabel.pinTop(to: titleLabel.bottomAnchor, 20)
-        descriptionLabel.pinHorizontal(to: contentView, 50)
+        descriptionLabel.pinTop(to: titleLabel.bottomAnchor, Constants.descriptionLabelTop)
+        descriptionLabel.pinHorizontal(to: contentView, Constants.articleImageViewLeftRight)
         descriptionLabel.pinBottom(to: contentView.bottomAnchor)
     }
 
