@@ -1,10 +1,3 @@
-//
-//  UIView+.swift
-//  dszhdanokPW2
-//
-//  Created by Дарья Жданок on 21.09.25.
-//
-
 import UIKit
 
 // MARK: - Pin methods

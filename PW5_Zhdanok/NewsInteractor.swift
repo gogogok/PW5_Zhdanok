@@ -7,18 +7,21 @@ final class NewsInteractor: NewsBusinessLogic, NewsDataStore {
             presenter?.presentNews(.init(articles: articles, isFresh: true))
         }
     }
+    
+    //MARK: - Fields
 
     private let worker: ArticleWorker
     var presenter: NewsPresentationLogic?
-
     private var page: Int = 1
     private var isLoading = false
 
+    //MARK: - Init
     init(presenter: NewsPresenter, worker: ArticleWorker = ArticleWorker()) {
         self.presenter = presenter
         self.worker = worker
     }
 
+    //MARK: - Func
     func loadFreshNews() {
         guard !isLoading else { return }
         isLoading = true

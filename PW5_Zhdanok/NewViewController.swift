@@ -9,7 +9,7 @@ import UIKit
 
 class NewViewController: UIViewController {
     
-    
+    //MARK: - Fields
     let interactor: NewsInteractor
     private let tableView = UITableView(frame: .zero, style: .plain)
     private var rows: [News.Row] = []
@@ -22,6 +22,7 @@ class NewViewController: UIViewController {
         interactor.loadFreshNews()
     }
     
+    //MARK: - Init
     init(interactor: NewsInteractor) {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
@@ -31,6 +32,7 @@ class NewViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - UI
     func setupTableView() {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -46,6 +48,7 @@ class NewViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
     }
     
+    //MARK: - func
     func displayNews(_ viewModel: News.Load.ViewModel) {
         rows = viewModel.rows
         DispatchQueue.main.async { [weak self] in
@@ -65,6 +68,7 @@ class NewViewController: UIViewController {
     
 }
 
+//MARK: - UITableViewDataSource
 extension NewViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         rows.count
@@ -90,6 +94,7 @@ extension NewViewController: UITableViewDataSource {
     }
 }
 
+//MARK: - UITableViewDelegate
 extension NewViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
